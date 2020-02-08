@@ -3,3 +3,7 @@
 
 # ignore ipynb checkpoints
 /.ipynb_checkpoints*
+
+# ignore .swp files
+*.swp
+
