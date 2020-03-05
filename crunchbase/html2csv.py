@@ -36,6 +36,7 @@ def parse(soup):
     row_data = []
     count = 0
     i = 0
+    j = 0
     while(i < len(fields)):
         field = fields[i]
         field_index = count % len(field_names)
@@ -48,6 +49,8 @@ def parse(soup):
             row_data.append(field.text.strip())
             i += 1
         if field_name == field_names[-1]:
+            row_data = [a.text.strip() for a in acq[j:j+3]] + row_data
+            j += 3
             data.append(row_data)
             row_data = []
         count += 1
@@ -67,8 +70,8 @@ import pandas as pd
 with open("crunchbase.csv", "w+") as f:
     df = pd.DataFrame(data)
     print(df.shape)
-    # header = "Transaction Name,Acquiree Name,Acquirer Name,"
-    header = ",".join(field_names)
+    header = "Transaction Name,Acquiree Name,Acquirer Name,"
+    header += ",".join(field_names)
     df.to_csv(f, index=False, header=header.split(","))
 
 
